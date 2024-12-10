@@ -26,8 +26,7 @@
         color: white;
         border: none;
         border-radius: 50%;
-        width: 60px;
-        height: 60px;
+        padding: 17px;
         font-size: 24px;
         cursor: pointer;
         display: flex;
@@ -36,6 +35,10 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         z-index: 1000;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      #chatbotButton img{
+        height: 35px;
+        width: 35px;
       }
 
       #chatbotButton:hover {
@@ -293,12 +296,12 @@
   </head>
   <body>
     <button id="chatbotButton" aria-label="Open Chatbot">
-      <img src="chatbot-icon.svg" alt="chatbot-icon" />
+      <img src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />
     </button>
 
     <div id="chatContainer" class="hidden">
       <div id="chatHeader">
-        <img src="chatbot-icon.svg" alt="chatbot-icon" />
+        <img src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />
         <h4>AI Assistant</h4>
         <button id="closeChat">
           <i class="fas fa-times"></i>
@@ -329,7 +332,7 @@
       if (chatContainer.classList.contains("visible")) {
         chatContainer.classList.remove("visible");
         chatbotButton.innerHTML =
-          '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+          '<img id="chatbotIcon" src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />';
         chatbotButton.setAttribute("aria-label", "Open Chatbot");
         isChatOpen = false;
       } else {
@@ -354,7 +357,7 @@
     closeChat.addEventListener("click", () => {
       chatContainer.classList.remove("visible");
       chatbotButton.innerHTML =
-        '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+        '<img id="chatbotIcon" src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />';
       chatbotButton.setAttribute("aria-label", "Open Chatbot");
       isChatOpen = false;
     });
