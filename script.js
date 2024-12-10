@@ -6,58 +6,68 @@ const chatInput = document.getElementById("chatInput");
 const sendMessageButton = document.getElementById("sendMessage");
 
 const API_URL = "https://chatbot.nipige.com/webhooks/rest/webhook";
-const senderId = "671f66d3ca5fec457479955a";// should be unique
+const senderId =
+  "671f66d3ca5fec457479955a" + Math.floor(Math.random() * 10000).toString();
 
-let isChatLoaded = false; // Flag to check if the initial chat is loaded
+let isChatLoaded = false;
 
-// Show chat container and load initial message
 chatbotButton.addEventListener("click", async () => {
-  chatContainer.classList.add("visible");
-  if (!isChatLoaded) {
-    const payload = {
-      sender: senderId,
-      metadata: { type: "trigital_chat_option" },
-      message: "welcome trigital chat",
-    };
-    await sendPayload(payload);
-    isChatLoaded = true;
+  // Toggle visibility
+  if (chatContainer.classList.contains("visible")) {
+    chatContainer.classList.remove("visible");
+    chatbotButton.innerHTML =
+      '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+    chatbotButton.setAttribute("aria-label", "Open Chatbot");
+    isChatOpen = false;
+  } else {
+    chatContainer.classList.add("visible");
+    chatbotButton.innerHTML = '<i class="fas fa-times"></i>';
+    chatbotButton.setAttribute("aria-label", "Close Chatbot");
+    isChatOpen = true;
+
+    // Load chatbot only once
+    if (!isChatLoaded) {
+      const payload = {
+        sender: senderId,
+        metadata: { type: "trigital_chat_option" },
+        message: "welcome trigital chat",
+      };
+      await sendPayload(payload);
+      isChatLoaded = true;
+    }
   }
 });
 
-// Hide chat container
 closeChat.addEventListener("click", () => {
   chatContainer.classList.remove("visible");
+  chatbotButton.innerHTML =
+    '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+  chatbotButton.setAttribute("aria-label", "Open Chatbot");
+  isChatOpen = false;
 });
 
-// Handle user input for free text when clicking the Send button
 sendMessageButton.addEventListener("click", sendMessage);
-
-// Handle user input for free text when pressing Enter key
 chatInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    event.preventDefault(); // Prevent newline insertion
+    event.preventDefault();
     sendMessage();
   }
 });
 
-// Function to handle message sending
 async function sendMessage() {
   const message = chatInput.value.trim();
-
   if (message) {
     const payload = {
       sender: senderId,
       metadata: { type: "trigital" },
       message: message,
     };
-
-    appendMessage("You", message); // Show the user's message in the chat
+    appendMessage("You", message);
     await sendPayload(payload);
-    chatInput.value = ""; // Clear input field
+    chatInput.value = "";
   }
 }
 
-// Function to send payload to the API
 async function sendPayload(payload) {
   try {
     const response = await fetch(API_URL, {
@@ -73,7 +83,6 @@ async function sendPayload(payload) {
   }
 }
 
-// Append messages or options to the chat window
 function handleResponse(data) {
   data.forEach((message) => {
     if (message.text) {
@@ -81,37 +90,121 @@ function handleResponse(data) {
     }
 
     if (message.buttons) {
-      message.buttons.forEach((button) => {
-        appendButton(button.title, button.payload);
-      });
+      appendButtons(message.buttons);
     }
   });
 }
 
-// Add message to the chat
 function appendMessage(sender, message) {
   const bubble = document.createElement("div");
   bubble.className = sender === "You" ? "user-message" : "bot-message";
   bubble.textContent = message;
 
   chatBody.appendChild(bubble);
-  chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll to the latest message
+  chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-// Add buttons to the chat
-function appendButton(title, payload) {
-  const button = document.createElement("button");
-  button.textContent = title;
-  button.className = "option-btn";
-  button.addEventListener("click", async () => {
-    const payloadData = {
-      sender: senderId,
-      metadata: { type: "trigital_chat_option" },
-      message: payload,
+function appendButtons(buttons) {
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = "button-container";
+
+  buttons.forEach((button) => {
+    const btn = document.createElement("button");
+    btn.textContent = button.title;
+    btn.className = "option-btn";
+    btn.addEventListener("click", async () => {
+      if (button.title === "Contact Us") {
+        showContactForm(); // Show the contact form
+      } else {
+        const payloadData = {
+          sender: senderId,
+          metadata: { type: "trigital_chat_option" },
+          message: button.payload,
+        };
+
+        appendMessage("You", button.title);
+        await sendPayload(payloadData);
+      }
+    });
+
+    buttonContainer.appendChild(btn);
+  });
+
+  chatBody.appendChild(buttonContainer);
+}
+function showContactForm() {
+  // Clear previous content if any
+  // chatBody.innerHTML = "";
+
+  // Create the form
+  const form = document.createElement("form");
+  form.id = "contactForm";
+  form.innerHTML = `
+<div class="form-group">
+<label for="name">Name*</label>
+<input type="text" id="name" name="name" required placeholder="Enter Your Name">
+</div>
+<div class="form-group">
+<label for="email">Business Email*</label>
+<input type="email" id="email" name="email" required placeholder="Your Email">
+</div>
+<div class="form-group">
+<label for="phone">Phone Number*</label>
+<input type="tel" id="phone" name="phone" required placeholder="Your Phone">
+</div>
+<div class="form-group">
+<label for="topic">Topic</label>
+<input type="text" id="topic" name="topic" placeholder="Topic">
+</div>
+<div class="form-group">
+<label for="message">Message*</label>
+<textarea id="message" name="message" required placeholder="Your Message"></textarea>
+</div>
+<button type="submit" class="form-submit-btn">Submit</button>
+`;
+
+  // Add submit event listener
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    // Gather form data
+    const formData = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      phone: form.phone.value.trim(),
+      topic: form.topic.value.trim(),
+      message: form.message.value.trim(),
     };
 
-    appendMessage("You", title); // Show the button selection as a message
-    await sendPayload(payloadData);
+    // Basic validation
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.message
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    // Create payload
+    const payload = {
+      sender: senderId,
+      metadata: { type: "contact_form" },
+      message: JSON.stringify(formData),
+    };
+
+    // Send payload
+    await sendPayload(payload);
+
+    // Show confirmation message
+    appendMessage("Bot", "Thank you! Your message has been submitted.");
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Clear form
+    chatBody.innerHTML = "";
   });
-  chatBody.appendChild(button);
+
+  chatBody.appendChild(form);
+  chatBody.scrollTop = chatBody.scrollHeight;
 }

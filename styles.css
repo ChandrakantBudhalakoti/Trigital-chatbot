@@ -10,7 +10,7 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: linear-gradient(45deg, #ff5a00, #ff9c40); /* Updated gradient */
+  background: linear-gradient(45deg, #ff5a00, #ff9c40);
   color: white;
   border: none;
   border-radius: 50%;
@@ -38,15 +38,11 @@ body {
 /* Slide Animation Styles */
 #chatContainer {
   position: fixed;
-  bottom: -500px; /* Initially hidden below the viewport */
+  bottom: -500px;
   right: 20px;
   width: 350px;
   height: 450px;
-  background: linear-gradient(
-    135deg,
-    #ff5a00,
-    #ffd54f
-  ); /* Warm gradient for chatbot */
+  background: linear-gradient(135deg, #ff5a00, #ffd54f);
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -54,12 +50,12 @@ body {
   overflow: hidden;
   z-index: 999;
   opacity: 0;
-  transition: bottom 0.5s ease, opacity 0.5s ease; /* Smooth transition for sliding and fading */
+  transition: bottom 0.5s ease, opacity 0.5s ease;
 }
 
 #chatContainer.visible {
-  bottom: 100px; /* Final position */
-  opacity: 1; /* Fully visible */
+  bottom: 100px;
+  opacity: 1;
 }
 
 /* Chat Header */
@@ -73,7 +69,6 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
 #chatHeader img {
   width: 30px;
   height: 30px;
@@ -106,21 +101,21 @@ body {
   gap: 10px;
 }
 
-#chatBody p {
-  margin: 0;
-  font-size: 14px;
+/* Button Container for horizontal alignment */
+.button-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 
 /* Chat Bubbles */
 .bot-message {
-  background: linear-gradient(
-    135deg,
-    #fdfbfb,
-    #ebedee
-  ); /* Subtle gray gradient */
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
   color: #333;
   padding: 10px 15px;
-  border-radius: 15px 15px 15px 0; /* Bubble shape */
+  border-radius: 15px 15px 15px 0;
   align-self: flex-start;
   max-width: 75%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -132,24 +127,20 @@ body {
 .bot-message:after {
   content: "";
   position: absolute;
-  top: 12px; /* Aligns tail with bubble center */
-  left: -6px; /* Positions tail closer to bubble */
+  top: 12px;
+  left: -6px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 6px 6px 6px 0; /* Adjust tail size */
-  border-color: transparent #ebedee transparent transparent; /* Tail color matches bubble */
+  border-width: 6px 6px 6px 0;
+  border-color: transparent #ebedee transparent transparent;
 }
 
 .user-message {
-  background: linear-gradient(
-    135deg,
-    #ff5a00,
-    #ff9c40
-  ); /* Warm orange gradient */
+  background: linear-gradient(135deg, #ff5a00, #ff9c40);
   color: white;
   padding: 10px 15px;
-  border-radius: 15px 15px 0 15px; /* Bubble shape */
+  border-radius: 15px 15px 0 15px;
   align-self: flex-end;
   max-width: 75%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -161,13 +152,13 @@ body {
 .user-message:after {
   content: "";
   position: absolute;
-  top: 12px; /* Aligns tail with bubble center */
-  right: -6px; /* Positions tail closer to bubble */
+  top: 12px;
+  right: -6px;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 6px 0 6px 6px; /* Adjust tail size */
-  border-color: transparent transparent transparent #ff9c40; /* Tail color matches bubble */
+  border-width: 6px 0 6px 6px;
+  border-color: transparent transparent transparent #ff9c40;
 }
 
 /* Chat Footer */
@@ -212,7 +203,6 @@ button.option-btn {
   background: linear-gradient(135deg, #ff5a00, #ff9c40);
   color: #fff;
   border: none;
-  margin: 5px 0;
   padding: 8px 10px;
   border-radius: 20px;
   cursor: pointer;
@@ -224,4 +214,66 @@ button.option-btn {
 button.option-btn:hover {
   background: linear-gradient(135deg, #ff9c40, #ff5a00);
   transform: scale(1.05);
+}
+/* Contact Form Styles */
+#contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#contactForm .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#contactForm label {
+  font-size: 14px;
+  color: #555;
+}
+
+#contactForm input,
+#contactForm textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+#contactForm input:focus,
+#contactForm textarea:focus {
+  border-color: #ff5a00;
+  outline: none;
+}
+
+#contactForm textarea {
+  resize: none;
+  height: 80px;
+}
+
+.form-submit-btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(45deg, #ff5a00, #ff9c40);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.form-submit-btn:hover {
+  background: linear-gradient(45deg, #ff9c40, #ff5a00);
+  transform: scale(1.05);
+}
+
+.form-submit-btn:active {
+  transform: scale(0.95);
 }

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Chatbot</title>
+    <style>
+      /* General Styles */
+      body {
+        margin: 0;
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f4f9;
+      }
+
+      /* Chatbot Button */
+      #chatbotButton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(45deg, #ff5a00, #ff9c40);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      #chatbotButton:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      #chatbotButton:active {
+        transform: scale(0.95);
+      }
+
+      /* Slide Animation Styles */
+      #chatContainer {
+        position: fixed;
+        bottom: -500px;
+        right: 20px;
+        width: 350px;
+        height: 450px;
+        background: linear-gradient(135deg, #ff5a00, #ffd54f);
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 999;
+        opacity: 0;
+        transition: bottom 0.5s ease, opacity 0.5s ease;
+      }
+
+      #chatContainer.visible {
+        bottom: 100px;
+        opacity: 1;
+      }
+
+      /* Chat Header */
+      #chatHeader {
+        background: linear-gradient(45deg, #ff5a00, #ff9c40);
+        color: #fff;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+      #chatHeader img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+      }
+
+      #chatHeader h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: normal;
+      }
+
+      #closeChat {
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        margin-left: auto;
+      }
+
+      /* Chat Body */
+      #chatBody {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        background: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Button Container for horizontal alignment */
+      .button-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      /* Chat Bubbles */
+      .bot-message {
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        color: #333;
+        padding: 10px 15px;
+        border-radius: 15px 15px 15px 0;
+        align-self: flex-start;
+        max-width: 75%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        word-wrap: break-word;
+        position: relative;
+        margin-bottom: 10px;
+      }
+
+      .bot-message:after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: -6px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 6px 6px 0;
+        border-color: transparent #ebedee transparent transparent;
+      }
+
+      .user-message {
+        background: linear-gradient(135deg, #ff5a00, #ff9c40);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 15px 15px 0 15px;
+        align-self: flex-end;
+        max-width: 75%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        word-wrap: break-word;
+        position: relative;
+        margin-bottom: 10px;
+      }
+
+      .user-message:after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        right: -6px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 6px 0 6px 6px;
+        border-color: transparent transparent transparent #ff9c40;
+      }
+
+      /* Chat Footer */
+      #chatFooter {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background: #f1f1f1;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+
+      #chatInput {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding: 8px 12px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      #sendMessage {
+        background: linear-gradient(45deg, #ff5a00, #ff9c40);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      #sendMessage:hover {
+        transform: scale(1.1);
+      }
+
+      /* Chat Option Buttons */
+      button.option-btn {
+        background: linear-gradient(135deg, #ff5a00, #ff9c40);
+        color: #fff;
+        border: none;
+        padding: 8px 10px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      button.option-btn:hover {
+        background: linear-gradient(135deg, #ff9c40, #ff5a00);
+        transform: scale(1.05);
+      }
+      /* Contact Form Styles */
+      #contactForm {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #contactForm .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      #contactForm label {
+        font-size: 14px;
+        color: #555;
+      }
+
+      #contactForm input,
+      #contactForm textarea {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: border-color 0.3s ease;
+      }
+
+      #contactForm input:focus,
+      #contactForm textarea:focus {
+        border-color: #ff5a00;
+        outline: none;
+      }
+
+      #contactForm textarea {
+        resize: none;
+        height: 80px;
+      }
+
+      .form-submit-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        background: linear-gradient(45deg, #ff5a00, #ff9c40);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      .form-submit-btn:hover {
+        background: linear-gradient(45deg, #ff9c40, #ff5a00);
+        transform: scale(1.05);
+      }
+
+      .form-submit-btn:active {
+        transform: scale(0.95);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="chatbotButton" aria-label="Open Chatbot">
+      <img src="chatbot-icon.svg" alt="chatbot-icon" />
+    </button>
+
+    <div id="chatContainer" class="hidden">
+      <div id="chatHeader">
+        <img src="chatbot-icon.svg" alt="chatbot-icon" />
+        <h4>AI Assistant</h4>
+        <button id="closeChat">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="chatBody"></div>
+      <div id="chatFooter">
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </body>
+  <script>
+    const chatbotButton = document.getElementById("chatbotButton");
+    const chatContainer = document.getElementById("chatContainer");
+    const closeChat = document.getElementById("closeChat");
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const sendMessageButton = document.getElementById("sendMessage");
+
+    const API_URL = "https://chatbot.nipige.com/webhooks/rest/webhook";
+    const senderId = "671f66d3ca5fec457479955a"; // should be unique
+
+    let isChatLoaded = false;
+
+    chatbotButton.addEventListener("click", async () => {
+      // Toggle visibility
+      if (chatContainer.classList.contains("visible")) {
+        chatContainer.classList.remove("visible");
+        chatbotButton.innerHTML =
+          '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+        chatbotButton.setAttribute("aria-label", "Open Chatbot");
+        isChatOpen = false;
+      } else {
+        chatContainer.classList.add("visible");
+        chatbotButton.innerHTML = '<i class="fas fa-times"></i>';
+        chatbotButton.setAttribute("aria-label", "Close Chatbot");
+        isChatOpen = true;
+
+        // Load chatbot only once
+        if (!isChatLoaded) {
+          const payload = {
+            sender: senderId,
+            metadata: { type: "trigital_chat_option" },
+            message: "welcome trigital chat",
+          };
+          await sendPayload(payload);
+          isChatLoaded = true;
+        }
+      }
+    });
+
+    closeChat.addEventListener("click", () => {
+      chatContainer.classList.remove("visible");
+      chatbotButton.innerHTML =
+        '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+      chatbotButton.setAttribute("aria-label", "Open Chatbot");
+      isChatOpen = false;
+    });
+
+    sendMessageButton.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    async function sendMessage() {
+      const message = chatInput.value.trim();
+      if (message) {
+        const payload = {
+          sender: senderId,
+          metadata: { type: "trigital" },
+          message: message,
+        };
+        appendMessage("You", message);
+        await sendPayload(payload);
+        chatInput.value = "";
+      }
+    }
+
+    async function sendPayload(payload) {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+        handleResponse(data);
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
+    }
+
+    function handleResponse(data) {
+      data.forEach((message) => {
+        if (message.text) {
+          appendMessage("Bot", message.text);
+        }
+
+        if (message.buttons) {
+          appendButtons(message.buttons);
+        }
+      });
+    }
+
+    function appendMessage(sender, message) {
+      const bubble = document.createElement("div");
+      bubble.className = sender === "You" ? "user-message" : "bot-message";
+      bubble.textContent = message;
+
+      chatBody.appendChild(bubble);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function appendButtons(buttons) {
+      const buttonContainer = document.createElement("div");
+      buttonContainer.className = "button-container";
+
+      buttons.forEach((button) => {
+        const btn = document.createElement("button");
+        btn.textContent = button.title;
+        btn.className = "option-btn";
+        btn.addEventListener("click", async () => {
+          if (button.title === "Contact Us") {
+            showContactForm(); // Show the contact form
+          } else {
+            const payloadData = {
+              sender: senderId,
+              metadata: { type: "trigital_chat_option" },
+              message: button.payload,
+            };
+
+            appendMessage("You", button.title);
+            await sendPayload(payloadData);
+          }
+        });
+
+        buttonContainer.appendChild(btn);
+      });
+
+      chatBody.appendChild(buttonContainer);
+    }
+    function showContactForm() {
+      // Clear previous content if any
+      // chatBody.innerHTML = "";
+
+      // Create the form
+      const form = document.createElement("form");
+      form.id = "contactForm";
+      form.innerHTML = `
+<div class="form-group">
+<label for="name">Name*</label>
+<input type="text" id="name" name="name" required placeholder="Enter Your Name">
+</div>
+<div class="form-group">
+<label for="email">Business Email*</label>
+<input type="email" id="email" name="email" required placeholder="Your Email">
+</div>
+<div class="form-group">
+<label for="phone">Phone Number*</label>
+<input type="tel" id="phone" name="phone" required placeholder="Your Phone">
+</div>
+<div class="form-group">
+<label for="topic">Topic</label>
+<input type="text" id="topic" name="topic" placeholder="Topic">
+</div>
+<div class="form-group">
+<label for="message">Message*</label>
+<textarea id="message" name="message" required placeholder="Your Message"></textarea>
+</div>
+<button type="submit" class="form-submit-btn">Submit</button>
+`;
+
+      // Add submit event listener
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        // Gather form data
+        const formData = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          topic: form.topic.value.trim(),
+          message: form.message.value.trim(),
+        };
+
+        // Basic validation
+        if (
+          !formData.name ||
+          !formData.email ||
+          !formData.phone ||
+          !formData.message
+        ) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        // Create payload
+        const payload = {
+          sender: senderId,
+          metadata: { type: "contact_form" },
+          message: JSON.stringify(formData),
+        };
+
+        // Send payload
+        await sendPayload(payload);
+
+        // Show confirmation message
+        appendMessage("Bot", "Thank you! Your message has been submitted.");
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        // Clear form
+        chatBody.innerHTML = "";
+      });
+
+      chatBody.appendChild(form);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  </script>
+</html>
