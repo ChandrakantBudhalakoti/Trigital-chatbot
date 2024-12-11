@@ -6,7 +6,8 @@ const chatInput = document.getElementById("chatInput");
 const sendMessageButton = document.getElementById("sendMessage");
 
 const API_URL = "https://chatbot.nipige.com/webhooks/rest/webhook";
-const senderId = "671f66d3ca5fec457479955a"; // should be unique
+const senderId =
+  "671f66d3ca5fec457479955a" + Math.floor(Math.random() * 10000).toString();
 
 let isChatLoaded = false;
 
@@ -70,8 +71,10 @@ async function sendMessage() {
       message: message,
     };
     appendMessage("You", message);
-    await sendPayload(payload);
     chatInput.value = "";
+    showTypingIndicator();
+    await sendPayload(payload);
+    removeTypingIndicator();
   }
 }
 
@@ -91,6 +94,7 @@ async function sendPayload(payload) {
 }
 
 function handleResponse(data) {
+  removeTypingIndicator();
   data.forEach((message) => {
     if (message.text) {
       appendMessage("Bot", message.text);
@@ -100,6 +104,7 @@ function handleResponse(data) {
       appendButtons(message.buttons);
     }
   });
+  chatBody.scrollTop = chatBody.scrollHeight;
 }
 
 function appendMessage(sender, message) {
@@ -201,6 +206,7 @@ function appendButtons(buttons) {
     btn.textContent = button.title;
     btn.className = "option-btn";
     btn.addEventListener("click", async () => {
+      showTypingIndicator();
       if (button.title === "Contact Us") {
         showContactForm(); // Show the contact form
       } else {
@@ -213,12 +219,14 @@ function appendButtons(buttons) {
         appendMessage("You", button.title);
         await sendPayload(payloadData);
       }
+      removeTypingIndicator();
     });
 
     buttonContainer.appendChild(btn);
   });
 
   chatBody.appendChild(buttonContainer);
+  chatBody.scrollTop = chatBody.scrollHeight;
 }
 function showContactForm() {
   // Clear previous content if any
@@ -300,3 +308,21 @@ document.getElementById("chatbotButton").addEventListener("click", function () {
   const button = this;
   button.classList.toggle("toggled");
 });
+function showTypingIndicator() {
+  const typingIndicator = document.createElement("div");
+  typingIndicator.id = "typingIndicator";
+  typingIndicator.className = "bot-message-container";
+  typingIndicator.innerHTML = `
+<div class="bot-message typing">
+  <span></span><span></span><span></span>
+</div>`;
+  chatBody.appendChild(typingIndicator);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const typingIndicator = document.getElementById("typingIndicator");
+  if (typingIndicator) {
+    typingIndicator.remove();
+  }
+}
