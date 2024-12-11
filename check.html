@@ -1,4 +1,4 @@
-<!-- PLEASE DON'T USE THIS. IN THIS I HAVE ADDED ALL FILES IN ONE FOR SOME OTHER USAGES -->
+<!-- DON'T USE THIS. IN THIS I HAVE ADDED ALL FILES IN ONE FOR SOME OTHER USAGES -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,11 +34,18 @@
         justify-content: center;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.3s ease;
       }
-      #chatbotButton img{
-        height: 35px;
-        width: 35px;
+
+      #chatbotButton img {
+        height: 40px;
+        width: 40px;
+      }
+
+      #chatbotButton.toggled {
+        padding: 0;
+        height: 60px;
+        width: 60px;
       }
 
       #chatbotButton:hover {
@@ -57,7 +64,6 @@
         right: 20px;
         width: 350px;
         height: 450px;
-        background: linear-gradient(135deg, #ff5a00, #ffd54f);
         border-radius: 10px;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         display: flex;
@@ -77,7 +83,7 @@
       #chatHeader {
         background: linear-gradient(45deg, #ff5a00, #ff9c40);
         color: #fff;
-        padding: 10px 15px;
+        padding: 1px 15px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -127,16 +133,29 @@
 
       /* Chat Bubbles */
       .bot-message {
-        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        font-size: 14px;
+        background: transparent;
         color: #333;
         padding: 10px 15px;
         border-radius: 15px 15px 15px 0;
-        align-self: flex-start;
+        border: 1px solid #ff5a00;
         max-width: 75%;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         word-wrap: break-word;
-        position: relative;
+      }
+
+      .bot-message-container {
+        display: flex;
+        align-items: flex-start;
         margin-bottom: 10px;
+      }
+      /* Profile image next to bot message */
+      .bot-message-container img {
+        background-color: #ff5a00 !important;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
       }
 
       .bot-message:after {
@@ -147,7 +166,6 @@
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 6px 6px 6px 0;
         border-color: transparent #ebedee transparent transparent;
       }
 
@@ -163,6 +181,12 @@
         position: relative;
         margin-bottom: 10px;
       }
+      /* User message (align to the right) */
+      .user-message-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
 
       .user-message:after {
         content: "";
@@ -172,26 +196,33 @@
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 6px 0 6px 6px;
         border-color: transparent transparent transparent #ff9c40;
       }
-
+      /* Time Stamp */
+      .timestamp {
+        font-size: 10px;
+        margin-top: 5px;
+        text-align: right;
+        color: #777;
+      }
       /* Chat Footer */
       #chatFooter {
+        margin: 10px;
         display: flex;
         align-items: center;
-        padding: 10px;
-        background: #f1f1f1;
+        padding: 0;
+        border: 1px solid;
+        border-image: linear-gradient(45deg, #ff5a00, #ff9c40) 1;
+        background: white !important;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
       }
 
       #chatInput {
         flex: 1;
-        border: 1px solid #ddd;
-        border-radius: 20px;
-        padding: 8px 12px;
-        margin-right: 10px;
+        padding: 1rem 5.625rem 12px 1rem;
+        border: none;
+        outline: none;
         font-size: 14px;
       }
 
@@ -200,7 +231,10 @@
         color: white;
         border: none;
         padding: 8px 12px;
+        margin: 4px;
         border-radius: 50%;
+        height: 40px;
+        width: 40px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -215,9 +249,9 @@
 
       /* Chat Option Buttons */
       button.option-btn {
-        background: linear-gradient(135deg, #ff5a00, #ff9c40);
-        color: #fff;
-        border: none;
+        background: transparent;
+        color: #333;
+        border: 1px solid #ff5a00;
         padding: 8px 10px;
         border-radius: 20px;
         cursor: pointer;
@@ -296,13 +330,19 @@
   </head>
   <body>
     <button id="chatbotButton" aria-label="Open Chatbot">
-      <img src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />
+      <img
+        src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
+        alt="chatbot-icon"
+      />
     </button>
 
     <div id="chatContainer" class="hidden">
       <div id="chatHeader">
-        <img src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />
-        <h4>AI Assistant</h4>
+        <img
+          src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
+          alt="chatbot-icon"
+        />
+        <h4>Trigo AI Assistant</h4>
         <button id="closeChat">
           <i class="fas fa-times"></i>
         </button>
@@ -369,6 +409,13 @@
         sendMessage();
       }
     });
+    sendMessageButton.addEventListener("click", () => {
+      const message = chatInput.value.trim();
+      if (message) {
+        appendMessage("You", message);
+        chatInput.value = "";
+      }
+    });
 
     async function sendMessage() {
       const message = chatInput.value.trim();
@@ -412,8 +459,30 @@
     }
 
     function appendMessage(sender, message) {
+      const container = document.createElement("div");
+
+      // Check sender and apply corresponding container class
+      if (sender === "Bot") {
+        container.className = "bot-message-container"; // Container for bot message
+
+        // Add bot profile image
+        const botImg = document.createElement("img");
+        botImg.src =
+          "https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg";
+        botImg.className = "bot-profile-img";
+        container.appendChild(botImg);
+      } else {
+        container.className = "user-message-container";
+      }
+
+      // Create the message bubble
       const bubble = document.createElement("div");
-      bubble.className = sender === "You" ? "user-message" : "bot-message";
+
+      if (sender === "Bot") {
+        bubble.className = "bot-message"; // Class for bot message bubble
+      } else {
+        bubble.className = "user-message"; // Class for user message bubble
+      }
 
       // Parse message for [text](link) format
       const regex = /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g;
@@ -429,9 +498,8 @@
           bubble.appendChild(textNode);
         }
 
-        // Ensure the match array contains the required elements
+        // Create button for the matched text
         if (match[1] && match[2]) {
-          // Create button for the matched text
           const button = document.createElement("button");
           button.className = "option-btn";
           button.textContent = match[1]; // Button text from []
@@ -447,8 +515,6 @@
         } else {
           console.error("Regex match is incomplete:", match);
         }
-
-        // Update lastIndex
         lastIndex = regex.lastIndex;
       }
 
@@ -458,7 +524,22 @@
         bubble.appendChild(textNode);
       }
 
-      chatBody.appendChild(bubble);
+      // Add timestamp
+      const timestamp = document.createElement("div");
+      timestamp.className = "timestamp";
+      timestamp.innerText = new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      bubble.appendChild(timestamp);
+
+      // Append the message bubble to the container
+      container.appendChild(bubble);
+
+      // Append the container to the chat body
+      chatBody.appendChild(container);
+
+      // Scroll to the bottom
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
@@ -566,5 +647,11 @@
       chatBody.appendChild(form);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
+    document
+      .getElementById("chatbotButton")
+      .addEventListener("click", function () {
+        const button = this;
+        button.classList.toggle("toggled");
+      });
   </script>
 </html>

@@ -14,8 +14,7 @@ body {
   color: white;
   border: none;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  padding: 17px;
   font-size: 24px;
   cursor: pointer;
   display: flex;
@@ -23,7 +22,18 @@ body {
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#chatbotButton img {
+  height: 40px;
+  width: 40px;
+}
+
+#chatbotButton.toggled {
+  padding: 0;
+  height: 60px;
+  width: 60px;
 }
 
 #chatbotButton:hover {
@@ -42,7 +52,6 @@ body {
   right: 20px;
   width: 350px;
   height: 450px;
-  background: linear-gradient(135deg, #ff5a00, #ffd54f);
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -62,7 +71,7 @@ body {
 #chatHeader {
   background: linear-gradient(45deg, #ff5a00, #ff9c40);
   color: #fff;
-  padding: 10px 15px;
+  padding: 1px 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -112,16 +121,29 @@ body {
 
 /* Chat Bubbles */
 .bot-message {
-  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  font-size: 14px;
+  background: transparent;
   color: #333;
   padding: 10px 15px;
   border-radius: 15px 15px 15px 0;
-  align-self: flex-start;
+  border: 1px solid #ff5a00;
   max-width: 75%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
-  position: relative;
+}
+
+.bot-message-container {
+  display: flex;
+  align-items: flex-start;
   margin-bottom: 10px;
+}
+/* Profile image next to bot message */
+.bot-message-container img {
+  background-color: #ff5a00 !important;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .bot-message:after {
@@ -132,7 +154,6 @@ body {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 6px 6px 6px 0;
   border-color: transparent #ebedee transparent transparent;
 }
 
@@ -148,6 +169,12 @@ body {
   position: relative;
   margin-bottom: 10px;
 }
+/* User message (align to the right) */
+.user-message-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
 
 .user-message:after {
   content: "";
@@ -157,26 +184,33 @@ body {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 6px 0 6px 6px;
   border-color: transparent transparent transparent #ff9c40;
 }
-
+/* Time Stamp */
+.timestamp {
+  font-size: 10px;
+  margin-top: 5px;
+  text-align: right;
+  color: #777;
+}
 /* Chat Footer */
 #chatFooter {
+  margin: 10px;
   display: flex;
   align-items: center;
-  padding: 10px;
-  background: #f1f1f1;
+  padding: 0;
+  border: 1px solid;
+  border-image: linear-gradient(45deg, #ff5a00, #ff9c40) 1;
+  background: white !important;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
 #chatInput {
   flex: 1;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  padding: 8px 12px;
-  margin-right: 10px;
+  padding: 1rem 5.625rem 12px 1rem;
+  border: none;
+  outline: none;
   font-size: 14px;
 }
 
@@ -185,7 +219,10 @@ body {
   color: white;
   border: none;
   padding: 8px 12px;
+  margin: 4px;
   border-radius: 50%;
+  height: 40px;
+  width: 40px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -200,9 +237,9 @@ body {
 
 /* Chat Option Buttons */
 button.option-btn {
-  background: linear-gradient(135deg, #ff5a00, #ff9c40);
-  color: #fff;
-  border: none;
+  background: transparent;
+  color: #333;
+  border: 1px solid #ff5a00;
   padding: 8px 10px;
   border-radius: 20px;
   cursor: pointer;

@@ -6,8 +6,7 @@ const chatInput = document.getElementById("chatInput");
 const sendMessageButton = document.getElementById("sendMessage");
 
 const API_URL = "https://chatbot.nipige.com/webhooks/rest/webhook";
-const senderId =
-  "671f66d3ca5fec457479955a" + Math.floor(Math.random() * 10000).toString();
+const senderId = "671f66d3ca5fec457479955a"; // should be unique
 
 let isChatLoaded = false;
 
@@ -16,7 +15,7 @@ chatbotButton.addEventListener("click", async () => {
   if (chatContainer.classList.contains("visible")) {
     chatContainer.classList.remove("visible");
     chatbotButton.innerHTML =
-      '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+      '<img id="chatbotIcon" src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />';
     chatbotButton.setAttribute("aria-label", "Open Chatbot");
     isChatOpen = false;
   } else {
@@ -41,7 +40,7 @@ chatbotButton.addEventListener("click", async () => {
 closeChat.addEventListener("click", () => {
   chatContainer.classList.remove("visible");
   chatbotButton.innerHTML =
-    '<img id="chatbotIcon" src="chatbot-icon.svg" alt="chatbot-icon" />';
+    '<img id="chatbotIcon" src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg" alt="chatbot-icon" />';
   chatbotButton.setAttribute("aria-label", "Open Chatbot");
   isChatOpen = false;
 });
@@ -51,6 +50,13 @@ chatInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
     sendMessage();
+  }
+});
+sendMessageButton.addEventListener("click", () => {
+  const message = chatInput.value.trim();
+  if (message) {
+    appendMessage("You", message);
+    chatInput.value = "";
   }
 });
 
@@ -96,8 +102,30 @@ function handleResponse(data) {
 }
 
 function appendMessage(sender, message) {
+  const container = document.createElement("div");
+
+  // Check sender and apply corresponding container class
+  if (sender === "Bot") {
+    container.className = "bot-message-container"; // Container for bot message
+
+    // Add bot profile image
+    const botImg = document.createElement("img");
+    botImg.src =
+      "https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg";
+    botImg.className = "bot-profile-img";
+    container.appendChild(botImg);
+  } else {
+    container.className = "user-message-container";
+  }
+
+  // Create the message bubble
   const bubble = document.createElement("div");
-  bubble.className = sender === "You" ? "user-message" : "bot-message";
+
+  if (sender === "Bot") {
+    bubble.className = "bot-message"; // Class for bot message bubble
+  } else {
+    bubble.className = "user-message"; // Class for user message bubble
+  }
 
   // Parse message for [text](link) format
   const regex = /\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/g;
@@ -113,9 +141,8 @@ function appendMessage(sender, message) {
       bubble.appendChild(textNode);
     }
 
-    // Ensure the match array contains the required elements
+    // Create button for the matched text
     if (match[1] && match[2]) {
-      // Create button for the matched text
       const button = document.createElement("button");
       button.className = "option-btn";
       button.textContent = match[1]; // Button text from []
@@ -131,8 +158,6 @@ function appendMessage(sender, message) {
     } else {
       console.error("Regex match is incomplete:", match);
     }
-
-    // Update lastIndex
     lastIndex = regex.lastIndex;
   }
 
@@ -142,7 +167,22 @@ function appendMessage(sender, message) {
     bubble.appendChild(textNode);
   }
 
-  chatBody.appendChild(bubble);
+  // Add timestamp
+  const timestamp = document.createElement("div");
+  timestamp.className = "timestamp";
+  timestamp.innerText = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  bubble.appendChild(timestamp);
+
+  // Append the message bubble to the container
+  container.appendChild(bubble);
+
+  // Append the container to the chat body
+  chatBody.appendChild(container);
+
+  // Scroll to the bottom
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
@@ -250,3 +290,7 @@ function showContactForm() {
   chatBody.appendChild(form);
   chatBody.scrollTop = chatBody.scrollHeight;
 }
+document.getElementById("chatbotButton").addEventListener("click", function () {
+  const button = this;
+  button.classList.toggle("toggled");
+});
