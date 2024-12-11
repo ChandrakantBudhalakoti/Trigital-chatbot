@@ -45,18 +45,19 @@ closeChat.addEventListener("click", () => {
   isChatOpen = false;
 });
 
+function sendMessage() {
+  const message = chatInput.value.trim();
+  if (message) {
+    appendMessage("You", message);
+    chatInput.value = "";
+  }
+}
+
 sendMessageButton.addEventListener("click", sendMessage);
 chatInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     event.preventDefault();
     sendMessage();
-  }
-});
-sendMessageButton.addEventListener("click", () => {
-  const message = chatInput.value.trim();
-  if (message) {
-    appendMessage("You", message);
-    chatInput.value = "";
   }
 });
 
@@ -141,6 +142,10 @@ function appendMessage(sender, message) {
       bubble.appendChild(textNode);
     }
 
+    // Create a container for the button (to force the button on a new line)
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "button-container"; // Optionally, you can add a class for styling
+
     // Create button for the matched text
     if (match[1] && match[2]) {
       const button = document.createElement("button");
@@ -154,7 +159,8 @@ function appendMessage(sender, message) {
           console.error("Invalid URL:", url);
         }
       };
-      bubble.appendChild(button);
+      buttonContainer.appendChild(button); // Add the button to the container
+      bubble.appendChild(buttonContainer); // Add the container (with the button) to the message bubble
     } else {
       console.error("Regex match is incomplete:", match);
     }

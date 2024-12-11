@@ -47,6 +47,7 @@ body {
 
 /* Slide Animation Styles */
 #chatContainer {
+  background-color: white !important;
   position: fixed;
   bottom: -500px;
   right: 20px;
@@ -112,11 +113,10 @@ body {
 
 /* Button Container for horizontal alignment */
 .button-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  width: 100%;
+  display: block;
+  text-align: left;
+  margin-top: 5px;
 }
 
 /* Chat Bubbles */
@@ -237,6 +237,9 @@ body {
 
 /* Chat Option Buttons */
 button.option-btn {
+  display: inline-block;
+  text-align: left;
+  margin: 2px;
   background: transparent;
   color: #333;
   border: 1px solid #ff5a00;
