@@ -229,9 +229,6 @@ function appendButtons(buttons) {
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 function showContactForm() {
-  // Clear previous content if any
-  // chatBody.innerHTML = "";
-
   // Create the form
   const form = document.createElement("form");
   form.id = "contactForm";
@@ -286,28 +283,37 @@ function showContactForm() {
     // Create payload
     const payload = {
       sender: senderId,
-      metadata: { type: "contact_form" },
-      message: JSON.stringify(formData),
+      metadata: {
+        type: "trigital_chat_option",
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value,
+        phone: form.phone.value,
+        topic: form.topic.value,
+      },
+      message: "trigital_contact_us_submit",
     };
 
+    showTypingIndicator();
     // Send payload
     await sendPayload(payload);
-
-    // Show confirmation message
-    appendMessage("Bot", "Thank you! Your message has been submitted.");
     chatBody.scrollTop = chatBody.scrollHeight;
-
-    // Clear form
-    chatBody.innerHTML = "";
+    form.name.value = "",
+    form.email.value = "",
+    form.message.value = "",
+    form.phone.value = "",
+    form.topic.value = "",
+    removeTypingIndicator();
   });
-
   chatBody.appendChild(form);
   chatBody.scrollTop = chatBody.scrollHeight;
 }
-document.getElementById("chatbotButton").addEventListener("click", function () {
-  const button = this;
-  button.classList.toggle("toggled");
-});
+document
+  .getElementById("chatbotButton")
+  .addEventListener("click", function () {
+    const button = this;
+    button.classList.toggle("toggled");
+  });
 function showTypingIndicator() {
   const typingIndicator = document.createElement("div");
   typingIndicator.id = "typingIndicator";
