@@ -399,6 +399,33 @@
     const senderId =
       "671f66d3ca5fec457479955a" + Math.floor(Math.random() * 10000).toString();
     let isChatLoaded = false;
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      const expires = "expires=" + date.toUTCString();
+      document.cookie =
+        name + "=" + JSON.stringify(value) + ";" + expires + ";path=/";
+    }
+    function getCookie(name) {
+      const cookieName = name + "=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookieArray = decodedCookie.split(";");
+      for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i].trim();
+        if (cookie.indexOf(cookieName) === 0) {
+          return JSON.parse(cookie.substring(cookieName.length));
+        }
+      }
+      return null;
+    }
+    window.addEventListener("load", () => {
+      const chatHistory = getCookie("chatHistory");
+      if (chatHistory) {
+        chatHistory.forEach((message) => {
+          appendMessage(message.sender, message.text, false);
+        });
+      }
+    });
     chatbotButton.addEventListener("click", async () => {
       if (chatContainer.classList.contains("visible")) {
         chatContainer.classList.remove("visible");
@@ -484,7 +511,7 @@
       });
       chatBody.scrollTop = chatBody.scrollHeight;
     }
-    function appendMessage(sender, message) {
+    function appendMessage(sender, message, saveToCookie = true) {
       const container = document.createElement("div");
       if (sender === "Bot") {
         container.className = "bot-message-container";
@@ -547,6 +574,11 @@
       container.appendChild(bubble);
       chatBody.appendChild(container);
       chatBody.scrollTop = chatBody.scrollHeight;
+      if (saveToCookie) {
+        const chatHistory = getCookie("chatHistory") || [];
+        chatHistory.push({ sender, text: message });
+        setCookie("chatHistory", chatHistory, 7); // Save for 7 days
+      }
     }
     function appendButtons(buttons) {
       const buttonContainer = document.createElement("div");
@@ -635,12 +667,12 @@
         showTypingIndicator();
         await sendPayload(payload);
         chatBody.scrollTop = chatBody.scrollHeight;
-        form.name.value = "",
-        form.email.value = "",
-        form.message.value = "",
-        form.phone.value = "",
-        form.topic.value = "",
-        removeTypingIndicator();
+        (form.name.value = ""),
+          (form.email.value = ""),
+          (form.message.value = ""),
+          (form.phone.value = ""),
+          (form.topic.value = ""),
+          removeTypingIndicator();
       });
       chatBody.appendChild(form);
       chatBody.scrollTop = chatBody.scrollHeight;
