@@ -14,6 +14,7 @@
         font-family: "Roboto", sans-serif !important;
         background-color: #f4f4f9 !important;
       }
+
       #chatbotButton {
         position: fixed !important;
         bottom: 20px !important;
@@ -32,22 +33,27 @@
         z-index: 1000 !important;
         transition: all 0.3s ease !important;
       }
+
       #chatbotButton img {
         height: 40px !important;
         width: 40px !important;
       }
+
       #chatbotButton.toggled {
         padding: 0 !important;
         height: 60px !important;
         width: 60px !important;
       }
+
       #chatbotButton:hover {
         transform: scale(1.1) !important;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
       }
+
       #chatbotButton:active {
         transform: scale(0.95) !important;
       }
+
       #chatContainer {
         background-color: white !important;
         position: fixed !important;
@@ -64,10 +70,12 @@
         opacity: 0 !important;
         transition: bottom 0.5s ease, opacity 0.5s ease !important;
       }
+
       #chatContainer.visible {
         bottom: 100px !important;
         opacity: 1 !important;
       }
+
       #chatHeader {
         background: linear-gradient(45deg, #ff5a00, #ff9c40) !important;
         color: #fff !important;
@@ -78,16 +86,19 @@
         border-top-left-radius: 10px !important;
         border-top-right-radius: 10px !important;
       }
+
       #chatHeader img {
         width: 30px !important;
         height: 30px !important;
         margin-right: 10px !important;
       }
+
       #chatHeader h4 {
         margin: 0 !important;
         font-size: 16px !important;
         font-weight: normal !important;
       }
+
       #closeChat {
         background: none !important;
         border: none !important;
@@ -96,6 +107,7 @@
         font-size: 18px !important;
         margin-left: auto !important;
       }
+
       #chatBody {
         flex: 1 !important;
         padding: 10px !important;
@@ -105,12 +117,14 @@
         flex-direction: column !important;
         gap: 10px !important;
       }
+
       .button-container {
         width: 100% !important;
         display: block !important;
         text-align: left !important;
         margin-top: 5px !important;
       }
+
       .bot-message {
         font-size: 14px !important;
         background: transparent !important;
@@ -122,11 +136,13 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
         word-wrap: break-word !important;
       }
+
       .bot-message-container {
         display: flex !important;
         align-items: flex-end !important;
         margin-bottom: 10px !important;
       }
+
       .bot-message-container img {
         background-color: #ff5a00 !important;
         width: 30px !important;
@@ -134,6 +150,7 @@
         border-radius: 50% !important;
         margin-right: 10px !important;
       }
+
       .bot-message:after {
         content: "" !important;
         position: absolute !important;
@@ -144,6 +161,7 @@
         border-style: solid !important;
         border-color: transparent #ebedee transparent transparent !important;
       }
+
       .user-message {
         background: linear-gradient(135deg, #ff5a00, #ff9c40) !important;
         color: white !important;
@@ -156,14 +174,17 @@
         position: relative !important;
         margin-bottom: 10px !important;
       }
+
       .user-message-container {
         display: flex !important;
         justify-content: flex-end !important;
         margin-bottom: 10px !important;
       }
+
       .user-message-container .timestamp {
         color: rgb(27, 26, 26) !important;
       }
+
       .user-message:after {
         content: "" !important;
         position: absolute !important;
@@ -174,12 +195,14 @@
         border-style: solid !important;
         border-color: transparent transparent transparent #ff9c40 !important;
       }
+
       .timestamp {
         font-size: 10px !important;
         margin-top: 5px !important;
         text-align: right !important;
         color: #777 !important;
       }
+
       #chatFooter {
         margin: 10px !important;
         display: flex !important;
@@ -191,6 +214,7 @@
         border-bottom-left-radius: 10px !important;
         border-bottom-right-radius: 10px !important;
       }
+
       #chatInput {
         flex: 1 !important;
         padding: 1rem 5.625rem 12px 1rem !important;
@@ -198,6 +222,7 @@
         outline: none !important;
         font-size: 14px !important;
       }
+
       #sendMessage {
         background: linear-gradient(45deg, #ff5a00, #ff9c40) !important;
         color: white !important;
@@ -214,9 +239,11 @@
         font-size: 16px !important;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
       }
+
       #sendMessage:hover {
         transform: scale(1.1) !important;
       }
+
       button.option-btn {
         display: inline-block !important;
         text-align: left !important;
@@ -231,10 +258,12 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
         transition: background 0.3s ease, transform 0.3s ease !important;
       }
+
       button.option-btn:hover {
         background: linear-gradient(135deg, #ff9c40, #ff5a00) !important;
         transform: scale(1.05) !important;
       }
+
       #contactForm {
         display: flex !important;
         flex-direction: column !important;
@@ -244,15 +273,18 @@
         border-radius: 10px !important;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
       }
+
       #contactForm .form-group {
         display: flex !important;
         flex-direction: column !important;
         gap: 5px !important;
       }
+
       #contactForm label {
         font-size: 14px !important;
         color: #555 !important;
       }
+
       #contactForm input,
       #contactForm textarea {
         padding: 10px !important;
@@ -261,15 +293,67 @@
         border-radius: 5px !important;
         transition: border-color 0.3s ease !important;
       }
+
       #contactForm input:focus,
       #contactForm textarea:focus {
         border-color: #ff5a00 !important;
         outline: none !important;
       }
+
       #contactForm textarea {
         resize: none !important;
         height: 80px !important;
       }
+
+      #userForm,
+      #existingUserFormID {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        padding: 20px !important;
+        background: #fff !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      #userForm .form-group,
+      #existingUserFormID .form-group {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5px !important;
+      }
+
+      #userForm label,
+      #existingUserFormID label {
+        font-size: 14px !important;
+        color: #555 !important;
+      }
+
+      #userForm input,
+      #userForm textarea,
+      #existingUserFormID input,
+      #existingUserFormID textarea {
+        padding: 10px !important;
+        font-size: 14px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 5px !important;
+        transition: border-color 0.3s ease !important;
+      }
+
+      #userForm input:focus,
+      #userForm textarea:focus,
+      #existingUserFormID input:focus,
+      #existingUserFormID textarea:focus {
+        border-color: #ff5a00 !important;
+        outline: none !important;
+      }
+
+      #userForm textarea,
+      #existingUserFormID textarea {
+        resize: none !important;
+        height: 80px !important;
+      }
+
       .form-submit-btn {
         padding: 10px 15px !important;
         font-size: 14px !important;
@@ -281,18 +365,22 @@
         cursor: pointer !important;
         transition: background 0.3s ease, transform 0.3s ease !important;
       }
+
       .form-submit-btn:hover {
         background: linear-gradient(45deg, #ff9c40, #ff5a00) !important;
         transform: scale(1.05) !important;
       }
+
       .form-submit-btn:active {
         transform: scale(0.95) !important;
       }
+
       .typing {
         display: flex !important;
         justify-content: space-around !important;
         width: 40px !important;
       }
+
       .typing span {
         display: inline-block !important;
         width: 8px !important;
@@ -301,25 +389,31 @@
         border-radius: 50% !important;
         animation: blink 1.4s infinite ease-in-out both !important;
       }
+
       .typing span:nth-child(1) {
         animation-delay: -0.32s !important;
       }
+
       .typing span:nth-child(2) {
         animation-delay: -0.16s !important;
       }
+
       .typing span:nth-child(3) {
         animation-delay: 0 !important;
       }
+
       @keyframes blink {
         0%,
         80%,
         100% {
           transform: scale(0);
         }
+
         40% {
           transform: scale(1);
         }
       }
+
       @media (max-width: 768px) {
         #chatContainer {
           width: 100% !important;
@@ -328,29 +422,36 @@
           right: 0 !important;
           border-radius: 0 !important;
         }
+
         #chatHeader {
           padding: 10px !important;
           font-size: 14px !important;
         }
+
         #chatHeader h4 {
           font-size: 14px !important;
         }
+
         #chatBody {
           padding: 8px !important;
         }
+
         #sendMessage {
           padding: 10px !important;
           font-size: 18px !important;
         }
+
         .bot-message,
         .user-message {
           font-size: 12px !important;
           padding: 8px 12px !important;
           max-width: 90% !important;
         }
+
         .timestamp {
           font-size: 8px !important;
         }
+
         .option-btn {
           font-size: 12px !important;
           padding: 6px 8px !important;
@@ -358,36 +459,68 @@
       }
     </style>
   </head>
+
   <body>
-    <button id="chatbotButton" aria-label="Open Chatbot">
-      <img
-        src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
-        alt="chatbot-icon"
-      />
-    </button>
-    <div id="chatContainer" class="hidden">
-      <div id="chatHeader">
+    <div id="chatbotContainer">
+      <button id="chatbotButton" aria-label="Open Chatbot">
         <img
           src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
           alt="chatbot-icon"
         />
-        <h4>Trigo AI Assistant</h4>
-        <button id="closeChat">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div id="chatBody"></div>
-      <div id="typingIndicator" class="bot-message-container">
-        <div class="bot-message typing">
-          <span></span><span></span><span></span>
+      </button>
+      <div id="chatContainer" class="hidden">
+        <div id="chatHeader">
+          <img
+            src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
+            alt="chatbot-icon"
+          />
+          <h4>Trigo AI Assistant</h4>
+          <button id="closeChat">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-      </div>
-      <div id="chatFooter">
-        <input type="text" id="chatInput" placeholder="Type your message..." />
-        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        <div id="chatBody">
+          <div id="userFormContainer">
+            <form id="userForm">
+              <div class="form-group">
+                <label for="name"><b>Name:</b></label>
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email"><b>Email:</b></label>
+                <input type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="company"><b>Company:</b></label>
+                <input type="text" id="company" required />
+              </div>
+              <div class="form-group">
+                <label for="jobTitle"><b>Job Title:</b></label>
+                <input type="text" id="jobTitle" required />
+              </div>
+              <button class="form-submit-btn" type="submit">Submit</button>
+              <button class="form-submit-btn" id="existingUserButton">
+                Are you an existing user?
+              </button>
+            </form>
+          </div>
+        </div>
+        <div id="chatFooter" class="hidden">
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+          />
+          <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
       </div>
     </div>
   </body>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
   <script>
     const chatbotButton = document.getElementById("chatbotButton");
     const chatContainer = document.getElementById("chatContainer");
@@ -396,9 +529,138 @@
     const chatInput = document.getElementById("chatInput");
     const sendMessageButton = document.getElementById("sendMessage");
     const API_URL = "https://chatbot.nipige.com/webhooks/rest/webhook";
-    const senderId =
+    let senderId =
       "671f66d3ca5fec457479955a" + Math.floor(Math.random() * 10000).toString();
     let isChatLoaded = false;
+    chatbotButton.addEventListener("click", async () => {
+      const userData = JSON.parse(localStorage.getItem("chatUserData"));
+      if (!userData) {
+        document.getElementById("chatContainer").classList.remove("hidden");
+        $("#userForm").show();
+        $("#existingUserButton").show();
+      } else {
+        document.getElementById("userFormContainer").classList.add("hidden");
+        document.getElementById("chatFooter").classList.remove("hidden");
+        document.getElementById("chatContainer").classList.remove("hidden");
+      }
+    });
+    $(document).on("submit", "#userForm", async (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const company = document.getElementById("company").value.trim();
+      const jobTitle = document.getElementById("jobTitle").value.trim();
+      senderId =
+        name.replace(/\s+/g, "").toLowerCase() +
+        email.split("@")[0].toLowerCase();
+      const userData = { name, email, company, jobTitle, senderId };
+      localStorage.setItem("chatUserData", JSON.stringify(userData));
+      document.cookie = `chatUserData=${JSON.stringify(
+        userData
+      )}; path=/; max-age=${7 * 24 * 60 * 60}`;
+      document.getElementById("userFormContainer").classList.add("hidden");
+      document.getElementById("chatFooter").classList.remove("hidden");
+      const payload = {
+        sender: senderId,
+        metadata: { type: "trigital_chat_option" },
+        message: "welcome trigital chat",
+      };
+      await sendPayload(payload);
+      $("#userForm").hide();
+      $("#existingUserButton").hide();
+    });
+    document
+      .getElementById("existingUserButton") 
+      .addEventListener("click", function () {
+        const existingUserForm = document.createElement("form");
+        existingUserForm.id = "existingUserFormID";
+        existingUserForm.innerHTML = `
+        <div class="form-group">
+        <label for="existingName"><b>Name:</b></label>
+        <input type="text" id="existingName" required />
+        </div>
+        <div class="form-group">
+        <label for="existingEmail"><b>Email:</b></label>
+        <input type="email" id="existingEmail" required />
+        </div>
+        <button class= "form-submit-btn" type="submit">Submit</button>
+      `;
+        $(document).on("submit", "#existingUserFormID", async (event) => {
+          event.preventDefault();
+          const existingName = document
+            .getElementById("existingName")
+            .value.trim();
+          const existingEmail = document
+            .getElementById("existingEmail")
+            .value.trim();
+          const senderId =
+            existingName.replace(/\s+/g, "").toLowerCase() +
+            existingEmail.split("@")[0].toLowerCase();
+          const storedData = JSON.parse(localStorage.getItem("chatUserData"));
+          if (storedData && storedData.senderId === senderId) {
+            document
+              .getElementById("userFormContainer")
+              .classList.add("hidden");
+            document.getElementById("chatFooter").classList.remove("hidden");
+
+            if (isChatLoaded) {
+              const payload = {
+                sender: senderId,
+                metadata: { type: "trigital_chat_option" },
+                message: "welcome trigital chat",
+              };
+              $("#existingUserFormID").hide();
+              isChatLoaded = false;
+              await sendPayload(payload);
+            }
+          } else {
+            const response = await fetch(
+              `https://chatbot.nipige.com/conversations/${senderId}/tracker`
+            );
+            const data = await response.json();
+            if (!data.latest_message.text) {
+              $("#userFormContainer").html(`<form id="userForm">
+            <label for="name"><b>Name:</b></label>
+            <input type="text" id="name" required />
+            <label for="email"><b>Email:</b></label>
+            <input type="email" id="email" required />
+            <label for="company"><b>Company:</b></label>
+            <input type="text" id="company" required />
+            <label for="jobTitle"><b>Job Title:</b></label>
+            <input type="text" id="jobTitle" required />
+            <button class= "form-submit-btn" type="submit">Submit</button>
+          </form>`);
+              alert(
+                "Sorry, we couldn't find any information about you. Please share your details again."
+              );
+              $("#chatFooter").addClass("hidden");
+              document
+                .getElementById("userFormContainer")
+                .classList.remove("hidden");
+            } else {
+              $("#existingUserFormID").hide();
+              if (isChatLoaded) {
+                const payload = {
+                  sender: senderId,
+                  metadata: { type: "trigital_chat_option" },
+                  message: "welcome trigital chat",
+                };
+                $("#existingUserFormID").hide();
+                isChatLoaded = false;
+                await sendPayload(payload);
+              }
+              document
+                .getElementById("userFormContainer")
+                .classList.add("hidden");
+              document.getElementById("chatFooter").classList.remove("hidden");
+            }
+          }
+        });
+        document.getElementById("userFormContainer").innerHTML = "";
+        document
+          .getElementById("userFormContainer")
+          .appendChild(existingUserForm);
+      });
     function setCookie(name, value, days) {
       const date = new Date();
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -418,14 +680,6 @@
       }
       return null;
     }
-    window.addEventListener("load", () => {
-      const chatHistory = getCookie("chatHistory");
-      if (chatHistory) {
-        chatHistory.forEach((message) => {
-          appendMessage(message.sender, message.text, false);
-        });
-      }
-    });
     chatbotButton.addEventListener("click", async () => {
       if (chatContainer.classList.contains("visible")) {
         chatContainer.classList.remove("visible");
@@ -444,7 +698,6 @@
             metadata: { type: "trigital_chat_option" },
             message: "welcome trigital chat",
           };
-          await sendPayload(payload);
           isChatLoaded = true;
         }
       }
@@ -456,13 +709,13 @@
       chatbotButton.setAttribute("aria-label", "Open Chatbot");
       isChatOpen = false;
     });
-    function sendMessage() {
-      const message = chatInput.value.trim();
-      if (message) {
-        appendMessage("You", message);
-        chatInput.value = "";
-      }
-    }
+    // function sendMessage() {
+    //   const message = chatInput.value.trim();
+    //   if (message) {
+    //     appendMessage("You", message);
+    //     chatInput.value = "";
+    //   }
+    // }
     sendMessageButton.addEventListener("click", sendMessage);
     chatInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
@@ -492,11 +745,18 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
         const data = await response.json();
         handleResponse(data);
       } catch (error) {
         console.error("Error sending message:", error);
+        appendMessage(
+          "Bot",
+          "There was an issue processing your request. Please try again."
+        );
       }
     }
     function handleResponse(data) {
