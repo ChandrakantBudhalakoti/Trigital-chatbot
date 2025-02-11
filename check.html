@@ -608,6 +608,7 @@
               .getElementById("userFormContainer")
               .classList.add("hidden");
             document.getElementById("chatFooter").style.display = "flex";
+            appendMessage("Bot", `Welcome back, ${existingName}!`);
             if (isChatLoaded) {
               const payload = {
                 sender: senderId,
@@ -635,15 +636,20 @@
           <input type="text" id="jobTitle" required />
           <button class="form-submit-btn" type="submit">Submit</button>
         </form>`);
-              alert(
+              appendMessage(
+                "Bot",
                 "Sorry, we couldn't find any information about you. Please share your details again."
               );
+              // alert(
+              //   "Sorry, we couldn't find any information about you. Please share your details again."
+              // );
               $("#chatFooter").addClass("hidden");
               document
                 .getElementById("userFormContainer")
                 .classList.remove("hidden");
             } else {
               $("#existingUserFormID").hide();
+              appendMessage("Bot", `Welcome back, ${existingName}!`);
               if (isChatLoaded) {
                 const payload = {
                   sender: senderId,
