@@ -529,9 +529,16 @@
     const chatInput = document.getElementById("chatInput");
     const sendMessageButton = document.getElementById("sendMessage");
     const API_URL = "https://chatbot.nipige.com/webhooks/rest/webhook";
-    let senderId =
-      "671f66d3ca5fec457479955a" + Math.floor(Math.random() * 10000).toString();
+    let senderId = null;
     let isChatLoaded = false;
+
+    function generateSenderId(name, email) {
+      return (
+        name.replace(/\s+/g, "").toLowerCase() +
+        email.split("@")[0].toLowerCase()
+      );
+    }
+
     chatbotButton.addEventListener("click", async () => {
       const userData = JSON.parse(localStorage.getItem("chatUserData"));
       if (!userData) {
@@ -539,20 +546,20 @@
         $("#userForm").show();
         $("#existingUserButton").show();
       } else {
+        senderId = generateSenderId(userData.name, userData.email);
         document.getElementById("userFormContainer").classList.add("hidden");
         document.getElementById("chatFooter").classList.remove("hidden");
         document.getElementById("chatContainer").classList.remove("hidden");
       }
     });
+
     $(document).on("submit", "#userForm", async (event) => {
       event.preventDefault();
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       const company = document.getElementById("company").value.trim();
       const jobTitle = document.getElementById("jobTitle").value.trim();
-      senderId =
-        name.replace(/\s+/g, "").toLowerCase() +
-        email.split("@")[0].toLowerCase();
+      senderId = generateSenderId(name, email);
       const userData = { name, email, company, jobTitle, senderId };
       localStorage.setItem("chatUserData", JSON.stringify(userData));
       document.cookie = `chatUserData=${JSON.stringify(
@@ -569,22 +576,23 @@
       $("#userForm").hide();
       $("#existingUserButton").hide();
     });
+
     document
-      .getElementById("existingUserButton") 
+      .getElementById("existingUserButton")
       .addEventListener("click", function () {
         const existingUserForm = document.createElement("form");
         existingUserForm.id = "existingUserFormID";
         existingUserForm.innerHTML = `
-        <div class="form-group">
-        <label for="existingName"><b>Name:</b></label>
-        <input type="text" id="existingName" required />
-        </div>
-        <div class="form-group">
-        <label for="existingEmail"><b>Email:</b></label>
-        <input type="email" id="existingEmail" required />
-        </div>
-        <button class= "form-submit-btn" type="submit">Submit</button>
-      `;
+    <div class="form-group">
+      <label for="existingName"><b>Name:</b></label>
+      <input type="text" id="existingName" required />
+    </div>
+    <div class="form-group">
+      <label for="existingEmail"><b>Email:</b></label>
+      <input type="email" id="existingEmail" required />
+    </div>
+    <button class="form-submit-btn" type="submit">Submit</button>
+  `;
         $(document).on("submit", "#existingUserFormID", async (event) => {
           event.preventDefault();
           const existingName = document
@@ -593,9 +601,7 @@
           const existingEmail = document
             .getElementById("existingEmail")
             .value.trim();
-          const senderId =
-            existingName.replace(/\s+/g, "").toLowerCase() +
-            existingEmail.split("@")[0].toLowerCase();
+          senderId = generateSenderId(existingName, existingEmail);
           const storedData = JSON.parse(localStorage.getItem("chatUserData"));
           if (storedData && storedData.senderId === senderId) {
             document
@@ -620,16 +626,16 @@
             const data = await response.json();
             if (!data.latest_message.text) {
               $("#userFormContainer").html(`<form id="userForm">
-            <label for="name"><b>Name:</b></label>
-            <input type="text" id="name" required />
-            <label for="email"><b>Email:</b></label>
-            <input type="email" id="email" required />
-            <label for="company"><b>Company:</b></label>
-            <input type="text" id="company" required />
-            <label for="jobTitle"><b>Job Title:</b></label>
-            <input type="text" id="jobTitle" required />
-            <button class= "form-submit-btn" type="submit">Submit</button>
-          </form>`);
+          <label for="name"><b>Name:</b></label>
+          <input type="text" id="name" required />
+          <label for="email"><b>Email:</b></label>
+          <input type="email" id="email" required />
+          <label for="company"><b>Company:</b></label>
+          <input type="text" id="company" required />
+          <label for="jobTitle"><b>Job Title:</b></label>
+          <input type="text" id="jobTitle" required />
+          <button class="form-submit-btn" type="submit">Submit</button>
+        </form>`);
               alert(
                 "Sorry, we couldn't find any information about you. Please share your details again."
               );
@@ -661,6 +667,7 @@
           .getElementById("userFormContainer")
           .appendChild(existingUserForm);
       });
+
     function setCookie(name, value, days) {
       const date = new Date();
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
@@ -668,6 +675,7 @@
       document.cookie =
         name + "=" + JSON.stringify(value) + ";" + expires + ";path=/";
     }
+
     function getCookie(name) {
       const cookieName = name + "=";
       const decodedCookie = decodeURIComponent(document.cookie);
@@ -680,6 +688,7 @@
       }
       return null;
     }
+
     chatbotButton.addEventListener("click", async () => {
       if (chatContainer.classList.contains("visible")) {
         chatContainer.classList.remove("visible");
@@ -702,6 +711,7 @@
         }
       }
     });
+
     closeChat.addEventListener("click", () => {
       chatContainer.classList.remove("visible");
       chatbotButton.innerHTML =
@@ -709,13 +719,7 @@
       chatbotButton.setAttribute("aria-label", "Open Chatbot");
       isChatOpen = false;
     });
-    // function sendMessage() {
-    //   const message = chatInput.value.trim();
-    //   if (message) {
-    //     appendMessage("You", message);
-    //     chatInput.value = "";
-    //   }
-    // }
+
     sendMessageButton.addEventListener("click", sendMessage);
     chatInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
@@ -723,6 +727,7 @@
         sendMessage();
       }
     });
+
     async function sendMessage() {
       const message = chatInput.value.trim();
       if (message) {
@@ -738,6 +743,7 @@
         removeTypingIndicator();
       }
     }
+
     async function sendPayload(payload) {
       try {
         const response = await fetch(API_URL, {
@@ -759,6 +765,7 @@
         );
       }
     }
+
     function handleResponse(data) {
       removeTypingIndicator();
       data.forEach((message) => {
@@ -771,6 +778,7 @@
       });
       chatBody.scrollTop = chatBody.scrollHeight;
     }
+
     function appendMessage(sender, message, saveToCookie = true) {
       const container = document.createElement("div");
       if (sender === "Bot") {
@@ -840,6 +848,7 @@
         setCookie("chatHistory", chatHistory, 7); // Save for 7 days
       }
     }
+
     function appendButtons(buttons) {
       const buttonContainer = document.createElement("div");
       buttonContainer.className = "button-container";
@@ -867,32 +876,33 @@
       chatBody.appendChild(buttonContainer);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
+
     function showContactForm() {
       const form = document.createElement("form");
       form.id = "contactForm";
       form.innerHTML = `
-<div class="form-group">
-<label for="name">Name*</label>
-<input type="text" id="name" name="name" required placeholder="Enter Your Name">
-</div>
-<div class="form-group">
-<label for="email">Business Email*</label>
-<input type="email" id="email" name="email" required placeholder="Your Email">
-</div>
-<div class="form-group">
-<label for="phone">Phone Number*</label>
-<input type="tel" id="phone" name="phone" required placeholder="Your Phone">
-</div>
-<div class="form-group">
-<label for="topic">Topic</label>
-<input type="text" id="topic" name="topic" placeholder="Topic">
-</div>
-<div class="form-group">
-<label for="message">Message*</label>
-<textarea id="message" name="message" required placeholder="Your Message"></textarea>
-</div>
-<button type="submit" class="form-submit-btn">Submit</button>
-`;
+    <div class="form-group">
+      <label for="name">Name*</label>
+      <input type="text" id="name" name="name" required placeholder="Enter Your Name">
+    </div>
+    <div class="form-group">
+      <label for="email">Business Email*</label>
+      <input type="email" id="email" name="email" required placeholder="Your Email">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number*</label>
+      <input type="tel" id="phone" name="phone" required placeholder="Your Phone">
+    </div>
+    <div class="form-group">
+      <label for="topic">Topic</label>
+      <input type="text" id="topic" name="topic" placeholder="Topic">
+    </div>
+    <div class="form-group">
+      <label for="message">Message*</label>
+      <textarea id="message" name="message" required placeholder="Your Message"></textarea>
+    </div>
+    <button type="submit" class="form-submit-btn">Submit</button>
+  `;
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const formData = {
@@ -927,22 +937,24 @@
         showTypingIndicator();
         await sendPayload(payload);
         chatBody.scrollTop = chatBody.scrollHeight;
-        (form.name.value = ""),
-          (form.email.value = ""),
-          (form.message.value = ""),
-          (form.phone.value = ""),
-          (form.topic.value = ""),
-          removeTypingIndicator();
+        form.name.value = "";
+        form.email.value = "";
+        form.message.value = "";
+        form.phone.value = "";
+        form.topic.value = "";
+        removeTypingIndicator();
       });
       chatBody.appendChild(form);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
+
     document
       .getElementById("chatbotButton")
       .addEventListener("click", function () {
         const button = this;
         button.classList.toggle("toggled");
       });
+
     function showTypingIndicator() {
       const typingIndicator = document.createElement("div");
       typingIndicator.id = "typingIndicator";
@@ -954,6 +966,7 @@
       chatBody.appendChild(typingIndicator);
       chatBody.scrollTop = chatBody.scrollHeight;
     }
+
     function removeTypingIndicator() {
       const typingIndicator = document.getElementById("typingIndicator");
       if (typingIndicator) {
