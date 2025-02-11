@@ -204,8 +204,8 @@
       }
 
       #chatFooter {
+        display: none;
         margin: 10px !important;
-        display: flex !important;
         align-items: center !important;
         padding: 0 !important;
         border: 1px solid !important;
@@ -566,7 +566,7 @@
         userData
       )}; path=/; max-age=${7 * 24 * 60 * 60}`;
       document.getElementById("userFormContainer").classList.add("hidden");
-      document.getElementById("chatFooter").classList.remove("hidden");
+      document.getElementById("chatFooter").style.display = "flex";
       const payload = {
         sender: senderId,
         metadata: { type: "trigital_chat_option" },
@@ -607,8 +607,7 @@
             document
               .getElementById("userFormContainer")
               .classList.add("hidden");
-            document.getElementById("chatFooter").classList.remove("hidden");
-
+            document.getElementById("chatFooter").style.display = "flex";
             if (isChatLoaded) {
               const payload = {
                 sender: senderId,
@@ -658,7 +657,7 @@
               document
                 .getElementById("userFormContainer")
                 .classList.add("hidden");
-              document.getElementById("chatFooter").classList.remove("hidden");
+              document.getElementById("chatFooter").style.display = "flex";
             }
           }
         });
