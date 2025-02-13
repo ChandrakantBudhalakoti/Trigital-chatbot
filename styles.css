@@ -1,11 +1,9 @@
-/* General Styles */
 body {
   margin: 0 !important;
   font-family: "Roboto", sans-serif !important;
   background-color: #f4f4f9 !important;
 }
 
-/* Chatbot Button */
 #chatbotButton {
   position: fixed !important;
   bottom: 20px !important;
@@ -45,7 +43,6 @@ body {
   transform: scale(0.95) !important;
 }
 
-/* Slide Animation Styles */
 #chatContainer {
   background-color: white !important;
   position: fixed !important;
@@ -68,7 +65,6 @@ body {
   opacity: 1 !important;
 }
 
-/* Chat Header */
 #chatHeader {
   background: linear-gradient(45deg, #ff5a00, #ff9c40) !important;
   color: #fff !important;
@@ -79,6 +75,7 @@ body {
   border-top-left-radius: 10px !important;
   border-top-right-radius: 10px !important;
 }
+
 #chatHeader img {
   width: 30px !important;
   height: 30px !important;
@@ -100,7 +97,6 @@ body {
   margin-left: auto !important;
 }
 
-/* Chat Body */
 #chatBody {
   flex: 1 !important;
   padding: 10px !important;
@@ -111,7 +107,6 @@ body {
   gap: 10px !important;
 }
 
-/* Button Container for horizontal alignment */
 .button-container {
   width: 100% !important;
   display: block !important;
@@ -119,7 +114,6 @@ body {
   margin-top: 5px !important;
 }
 
-/* Chat Bubbles */
 .bot-message {
   font-size: 14px !important;
   background: transparent !important;
@@ -137,7 +131,7 @@ body {
   align-items: flex-end !important;
   margin-bottom: 10px !important;
 }
-/* Profile image next to bot message */
+
 .bot-message-container img {
   background-color: #ff5a00 !important;
   width: 30px !important;
@@ -169,7 +163,7 @@ body {
   position: relative !important;
   margin-bottom: 10px !important;
 }
-/* User message (align to the right) */
+
 .user-message-container {
   display: flex !important;
   justify-content: flex-end !important;
@@ -179,6 +173,7 @@ body {
 .user-message-container .timestamp {
   color: rgb(27, 26, 26) !important;
 }
+
 .user-message:after {
   content: "" !important;
   position: absolute !important;
@@ -189,17 +184,17 @@ body {
   border-style: solid !important;
   border-color: transparent transparent transparent #ff9c40 !important;
 }
-/* Time Stamp */
+
 .timestamp {
   font-size: 10px !important;
   margin-top: 5px !important;
   text-align: right !important;
   color: #777 !important;
 }
-/* Chat Footer */
+
 #chatFooter {
+  display: none;
   margin: 10px !important;
-  display: flex !important;
   align-items: center !important;
   padding: 0 !important;
   border: 1px solid !important;
@@ -238,7 +233,6 @@ body {
   transform: scale(1.1) !important;
 }
 
-/* Chat Option Buttons */
 button.option-btn {
   display: inline-block !important;
   text-align: left !important;
@@ -258,7 +252,7 @@ button.option-btn:hover {
   background: linear-gradient(135deg, #ff9c40, #ff5a00) !important;
   transform: scale(1.05) !important;
 }
-/* Contact Form Styles */
+
 #contactForm {
   display: flex !important;
   flex-direction: column !important;
@@ -300,6 +294,55 @@ button.option-btn:hover {
   height: 80px !important;
 }
 
+#userForm,
+#existingUserFormID {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+  padding: 20px !important;
+  background: #fff !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+#userForm .form-group,
+#existingUserFormID .form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+}
+
+#userForm label,
+#existingUserFormID label {
+  font-size: 14px !important;
+  color: #555 !important;
+}
+
+#userForm input,
+#userForm textarea,
+#existingUserFormID input,
+#existingUserFormID textarea {
+  padding: 10px !important;
+  font-size: 14px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 5px !important;
+  transition: border-color 0.3s ease !important;
+}
+
+#userForm input:focus,
+#userForm textarea:focus,
+#existingUserFormID input:focus,
+#existingUserFormID textarea:focus {
+  border-color: #ff5a00 !important;
+  outline: none !important;
+}
+
+#userForm textarea,
+#existingUserFormID textarea {
+  resize: none !important;
+  height: 80px !important;
+}
+
 .form-submit-btn {
   padding: 10px 15px !important;
   font-size: 14px !important;
@@ -320,7 +363,7 @@ button.option-btn:hover {
 .form-submit-btn:active {
   transform: scale(0.95) !important;
 }
-/* typing animation */
+
 .typing {
   display: flex !important;
   justify-content: space-around !important;
@@ -354,11 +397,12 @@ button.option-btn:hover {
   100% {
     transform: scale(0);
   }
+
   40% {
     transform: scale(1);
   }
 }
-/* Mobile Responsiveness */
+
 @media (max-width: 768px) {
   #chatContainer {
     width: 100% !important;

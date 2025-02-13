@@ -11,34 +11,63 @@
     <title>Chatbot</title>
   </head>
   <body>
-    <button id="chatbotButton" aria-label="Open Chatbot">
-      <img
-        src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
-        alt="chatbot-icon"
-      />
-    </button>
-
-    <!-- Chat Container -->
-    <div id="chatContainer" class="hidden">
-      <div id="chatHeader">
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <div id="chatbotContainer">
+      <button id="chatbotButton" aria-label="Open Chatbot">
         <img
           src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
           alt="chatbot-icon"
         />
-        <h4>Trigo AI Assistant</h4>
-        <button id="closeChat">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div id="chatBody"></div>
-      <div id="typingIndicator" class="bot-message-container">
-        <div class="bot-message typing">
-          <span></span><span></span><span></span>
+      </button>
+      <div id="chatContainer" class="hidden">
+        <div id="chatHeader">
+          <img
+            src="https://trigitaltech.com/wp-content/uploads/2024/12/chatbot-icon.svg"
+            alt="chatbot-icon"
+          />
+          <h4>Trigo AI Assistant</h4>
+          <button id="closeChat">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-      </div>
-      <div id="chatFooter">
-        <input type="text" id="chatInput" placeholder="Type your message..." />
-        <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        <div id="chatBody">
+          <div id="userFormContainer">
+            <form id="userForm">
+              <div class="form-group">
+                <label for="name"><b>Name:</b></label>
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email"><b>Email:</b></label>
+                <input type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="company"><b>Company:</b></label>
+                <input type="text" id="company" required />
+              </div>
+              <div class="form-group">
+                <label for="jobTitle"><b>Job Title:</b></label>
+                <input type="text" id="jobTitle" required />
+              </div>
+              <button class="form-submit-btn" type="submit">Submit</button>
+              <button class="form-submit-btn" id="existingUserButton">
+                Are you an existing user?
+              </button>
+            </form>
+          </div>
+        </div>
+        <div id="chatFooter" class="hidden">
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+          />
+          <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
       </div>
     </div>
   </body>
